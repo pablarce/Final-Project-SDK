@@ -1,28 +1,29 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
+import js from "@eslint/js";
+import reactHooks from "eslint-plugin-react-hooks";
+import reactRefresh from "eslint-plugin-react-refresh";
+import globals from "globals";
 
-export default tseslint.config(
-  { ignores: ['dist'] },
+export default [
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
-    files: ['**/*.{ts,tsx}'],
+    ignores: ["dist"], // Ignorar la carpeta `dist`
+  },
+  {
+    extends: [js.configs.recommended], // Configuración recomendada para JavaScript
+    files: ["**/*.{ts,tsx}"], // Aplica a archivos TypeScript y TSX
     languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
+      ecmaVersion: 2020, // Especifica la versión de ECMAScript
+      globals: globals.browser, // Usa variables globales del entorno navegador
     },
     plugins: {
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
+      "react-hooks": reactHooks, // Configuración para React Hooks
+      "react-refresh": reactRefresh, // Configuración para React Refresh
     },
     rules: {
-      ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
+      ...reactHooks.configs.recommended.rules, // Reglas recomendadas de React Hooks
+      "react-refresh/only-export-components": [
+        "warn",
+        { allowConstantExport: true }, // Configuración para React Refresh
       ],
     },
   },
-)
+];
