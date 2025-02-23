@@ -224,3 +224,14 @@
     color: rgb(136, 134, 134); /* Puedes cambiar el color del punto si lo deseas */
     font-weight: bold;
 }
+
+
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    }
+  body {
+    @apply bg-background text-foreground;
+    }
+}

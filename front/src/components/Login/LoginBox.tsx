@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { useAuth } from "@/context/AuthContext"
+//import { useAuth } from "@/context/AuthContext"
 import Paths from "@/router/paths"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Eye, EyeClosed, Loader2 } from "lucide-react"
@@ -20,17 +20,16 @@ import {
 } from "@/components/ui/Form/Form"
 import { Input } from "@/components/ui/Input/Input"
 
-// Define the form validation schema with Zod
 const formSchema = z.object({
     email: z
         .string()
-        .email({ message: "Debe ser un email válido." })
-        .min(2, { message: "El email debe tener al menos 2 caracteres." })
-        .max(50, { message: "El email no puede exceder 50 caracteres." }),
+        .email({ message: "Must be a valid email." })
+        .min(2, { message: "Email must be at least 2 characters." })
+        .max(50, { message: "Email cannot exceed 50 characters." }),
     password: z
         .string()
-        .min(6, { message: "La contraseña debe tener al menos 6 caracteres." })
-        .max(100, { message: "La contraseña no puede exceder 100 caracteres." }),
+        .min(6, { message: "Password must be at least 6 characters." })
+        .max(100, { message: "Password cannot exceed 100 characters." }),
 })
 
 interface LoginFormInputs {
@@ -58,17 +57,17 @@ const LoginBox: React.FC<LoginBoxProps> = ({ setIsLoginPage, className }) => {
     const [showPassword, setShowPassword] = useState<boolean>(false) // Estado para mostrar/ocultar contraseña
     const navigate = useNavigate()
 
-    const { login } = useAuth()
+    //    const { login } = useAuth()
 
     const onSubmit = async (data: LoginFormInputs) => {
         setIsLoading(true)
         setError(null)
 
         try {
-            await login(data.email, data.password) // Cambiado de username a email
+            //await login(data.email, data.password)
             navigate(Paths.HOME, { replace: true })
         } catch (err: any) {
-            setError(err.message || "Hubo un problema al iniciar sesión.")
+            setError(err.message || "There was a problem logging in.")
         } finally {
             setIsLoading(false)
         }
@@ -76,8 +75,8 @@ const LoginBox: React.FC<LoginBoxProps> = ({ setIsLoginPage, className }) => {
 
     return (
         <div className={cn(className, "flex flex-col items-center justify-center text-white")}>
-            <h1 className="text-xl font-bold mb-1">Inicio de sesión</h1>
-            <h2 className="text-sm font-light text-center">Ingresa tus credenciales para continuar</h2>
+            <h1 className="text-xl font-bold mb-1">Login</h1>
+            <h2 className="text-sm font-light text-center">Enter your credentials to continue</h2>
             <div className="py-2" />
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
@@ -92,11 +91,11 @@ const LoginBox: React.FC<LoginBoxProps> = ({ setIsLoginPage, className }) => {
                                     <Input
                                         className="bg-gray-700 w-full"
                                         type="email"
-                                        placeholder="Ingresa tu email"
+                                        placeholder="Enter your email"
                                         {...field}
                                     />
                                 </FormControl>
-                                <FormDescription>Este es tu email de acceso.</FormDescription>
+                                <FormDescription>This is your login email.</FormDescription>
                                 <FormMessage>{form.formState.errors.email?.message}</FormMessage>
                             </FormItem>
                         )}
@@ -108,12 +107,12 @@ const LoginBox: React.FC<LoginBoxProps> = ({ setIsLoginPage, className }) => {
                         name="password"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Contraseña</FormLabel>
+                                <FormLabel>Password</FormLabel>
                                 <FormControl className="relative">
                                     <div className="relative text-white">
                                         <Input
                                             type={showPassword ? "text" : "password"}
-                                            placeholder="Ingresa tu contraseña"
+                                            placeholder="Enter your password"
                                             {...field}
                                         />
                                         <span
@@ -124,7 +123,7 @@ const LoginBox: React.FC<LoginBoxProps> = ({ setIsLoginPage, className }) => {
                                         </span>
                                     </div>
                                 </FormControl>
-                                <FormDescription>Ingresa tu contraseña.</FormDescription>
+                                <FormDescription>Enter your password.</FormDescription>
                                 <FormMessage>{form.formState.errors.password?.message}</FormMessage>
                             </FormItem>
                         )}
@@ -133,24 +132,24 @@ const LoginBox: React.FC<LoginBoxProps> = ({ setIsLoginPage, className }) => {
                     {/* Submit Button */}
                     <Button type="submit" className="mt-4 w-full hover:bg-gray-700" disabled={isLoading}>
                         {isLoading && <Loader2 className="animate-spin h-5 w-5 mr-1" viewBox="0 0 24 24" />}
-                        Iniciar sesión
+                        Login
                     </Button>
                 </form>
             </Form>
             {error && <p className="text-red-500 mt-4">{error}</p>}
             <div className="flex justify-center items-center gap-1 w-full pt-4">
                 <div className="w-full h-0.5 bg-gray-500 font-light" />
-                <p className="text-sm min-w-28 font-light text-center">o crea una cuenta aquí</p>
+                <p className="text-sm min-w-28 font-light text-center">or create an account here</p>
                 <div className="w-full h-0.5 bg-gray-500 font-light" />
             </div>
             <Button
                 onClick={() => setIsLoginPage(false)}
                 className="mt-4 w-full bg-gray-200 text-black hover:text-gray-200 hover:bg-gray-700 duration-300"
             >
-                Crear cuenta
+                Create Account
             </Button>
             <p className="text-sm font-light text-center pt-4">
-                Al continuar, aceptas nuestros Términos de Servicio y Política de Privacidad.
+                By continuing, you accept our Terms of Service and Privacy Policy.
             </p>
         </div>
     )
