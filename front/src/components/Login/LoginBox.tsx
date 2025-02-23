@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-//import { useAuth } from "@/context/AuthContext"
+import { useAuth } from "@/context/AuthContext"
 import Paths from "@/router/paths"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Eye, EyeClosed, Loader2 } from "lucide-react"
@@ -52,19 +52,19 @@ const LoginBox: React.FC<LoginBoxProps> = ({ setIsLoginPage, className }) => {
         },
     })
 
-    const [isLoading, setIsLoading] = useState<boolean>(false) // Estado de carga
+    const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<string | null>(null)
-    const [showPassword, setShowPassword] = useState<boolean>(false) // Estado para mostrar/ocultar contraseña
+    const [showPassword, setShowPassword] = useState<boolean>(false)
     const navigate = useNavigate()
 
-    //    const { login } = useAuth()
+    const { login } = useAuth()
 
     const onSubmit = async (data: LoginFormInputs) => {
         setIsLoading(true)
         setError(null)
 
         try {
-            //await login(data.email, data.password)
+            await login(data.email, data.password)
             navigate(Paths.HOME, { replace: true })
         } catch (err: any) {
             setError(err.message || "There was a problem logging in.")
