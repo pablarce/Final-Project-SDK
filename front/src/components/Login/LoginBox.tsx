@@ -18,7 +18,7 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/Form/Form"
-import { Input } from "@/components/ui/Input/Input"
+import { Input } from "@/components/ui/Input/input"
 
 const formSchema = z.object({
     email: z
