@@ -2,7 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 
 import ProtectedLayout from "./components/layout/ProtectedLayout"
 import PublicLayout from "./components/layout/PublicLayout"
-import { Toaster } from "./components/ui/Sonner/Sonner"
+import { Toaster } from "./components/ui/Toast/Toaster"
 import { AuthProvider } from "./context/AuthContext"
 import { LibraryProvider } from "./context/LibraryContext"
 import { LoansProvider } from "./context/LoansContext"

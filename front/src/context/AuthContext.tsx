@@ -61,7 +61,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const register = async (email: string, password: string, username: string, admin: boolean) => {
         try {
             const { user: userData } = await registerUser(email, password, username, admin)
-            setUser(userData) // Guardar los datos del usuario en el estado
+            setUser(userData)
         } catch (error) {
             console.error("Error en el registro:", error)
             throw error
