@@ -10,7 +10,7 @@ import { z } from "zod"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/Button/Button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/Form/Form"
-import { Input } from "@/components/ui/Input/input"
+import { Input } from "@/components/ui/Input/Input"
 
 // Define the form validation schema with Zod
 const registerFormSchema = z
