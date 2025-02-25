@@ -16,7 +16,7 @@ const Body = ({ page, className }: BodyInterface) => {
             case "list":
                 return <List />
             default:
-                return <div>Página no encontrada</div>
+                return <div>Page not found</div>
         }
     }
 

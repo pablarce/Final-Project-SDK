@@ -8,8 +8,8 @@ interface HeaderInterface {
 
 const Header = ({ page, setPage, className }: HeaderInterface) => {
     const tabs = [
-        { id: "order", label: "Realizar prestamo" },
-        { id: "list", label: "Listar prestamos" },
+        { id: "order", label: "Make loan" },
+        { id: "list", label: "List loans" },
     ]
 
     return (

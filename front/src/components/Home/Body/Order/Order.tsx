@@ -25,7 +25,7 @@ const Order: React.FC<OrderProps> = ({ className }) => {
                 setIsCooldown(false)
             }, 2000)
         } else {
-            console.warn("Refetch está en cooldown, intenta más tarde.")
+            console.warn("Refetch is in cooldown, try again later.")
         }
     }
 

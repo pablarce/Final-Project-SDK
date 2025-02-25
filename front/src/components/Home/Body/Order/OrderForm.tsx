@@ -21,9 +21,9 @@ import {
 import { Input } from "@/components/ui/Input/Input"
 
 const formSchema = z.object({
-    quantity: z.number().min(1, { message: "La cantidad debe ser al menos 1." }),
-    startDate: z.string().min(1, { message: "La fecha de inicio es obligatoria." }),
-    endDate: z.string().min(1, { message: "La fecha de devolución es obligatoria." }),
+    quantity: z.number().min(1, { message: "Quantity must be at least 1." }),
+    startDate: z.string().min(1, { message: "Start date is required." }),
+    endDate: z.string().min(1, { message: "Return date is required." }),
 })
 
 type OrderFormInputs = z.infer<typeof formSchema>
@@ -37,12 +37,12 @@ const OrderForm: React.FC<OrderFormProps> = ({ className, handleRefetch }) => {
     const { toast } = useToast()
 
     const { idSelected, libraryData } = useLibrary()
-    const { addLoan } = useLoans() // Función para crear préstamos
+    const { addLoan } = useLoans() // Function to create loans
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
-    // Encuentra el nombre del libro basado en idSelected
+    // Find book name based on idSelected
     const selectedBook = libraryData?.find((book) => book.id === idSelected)
-    const bookName = selectedBook?.name || "No seleccionado"
+    const bookName = selectedBook?.name || "Not selected"
 
     const form = useForm<OrderFormInputs>({
         resolver: zodResolver(formSchema),
@@ -58,26 +58,25 @@ const OrderForm: React.FC<OrderFormProps> = ({ className, handleRefetch }) => {
             toast({
                 variant: "destructive",
                 title: "Error",
-                description: "Debes seleccionar un libro para crear un préstamo.",
+                description: "You must select a book to create a loan.",
             })
             return
         }
 
-        setIsLoading(true) // Activar loader
+        setIsLoading(true) // Activate loader
         try {
-            console.log(Number(idSelected), data.quantity, data.startDate, data.endDate)
             await addLoan(Number(idSelected), data.quantity, data.startDate, data.endDate)
-            await new Promise((resolve) => setTimeout(resolve, 1000)) // Espera 1 segundo
+            await new Promise((resolve) => setTimeout(resolve, 1000)) // Wait 1 second
             toast({
-                title: "Préstamo Creado",
-                description: `Se ha creado el préstamo de "${bookName}" correctamente.`,
+                title: "Loan Created",
+                description: `The loan for "${bookName}" has been created successfully.`,
             })
             await form.reset()
         } catch (error: any) {
             toast({
                 variant: "destructive",
-                title: "Error al crear el préstamo",
-                description: error.message || "No se pudo crear el préstamo.",
+                title: "Error creating loan",
+                description: error.message || "Could not create the loan.",
             })
         } finally {
             handleRefetch()
@@ -91,84 +90,79 @@ const OrderForm: React.FC<OrderFormProps> = ({ className, handleRefetch }) => {
                 onSubmit={form.handleSubmit(handleSubmit)}
                 className={cn("flex flex-col items-center justify-center w-full space-y-4 text-white", className)}
             >
-                {/* Nombre del Libro */}
+                {/* Book Name */}
                 <FormItem className="w-full">
-                    <FormLabel>Nombre del Libro</FormLabel>
+                    <FormLabel>Book Name</FormLabel>
                     <div className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-700">
                         {bookName}
                     </div>
-                    <FormDescription>El nombre del libro seleccionado.</FormDescription>
+                    <FormDescription>The selected book name.</FormDescription>
                 </FormItem>
 
-                {/* Campo: Cantidad */}
+                {/* Field: Quantity */}
                 <FormField
                     control={form.control}
                     name="quantity"
                     render={({ field }) => (
                         <FormItem className="w-full">
-                            <FormLabel>Cantidad</FormLabel>
+                            <FormLabel>Quantity</FormLabel>
                             <FormControl>
                                 <Input
                                     type="number"
                                     min="1"
-                                    placeholder="Cantidad"
+                                    placeholder="Quantity"
                                     {...field}
                                     value={field.value ?? ""}
-                                    onChange={(e) => field.onChange(Number(e.target.value))} // Convierte a número
+                                    onChange={(e) => field.onChange(Number(e.target.value))}
                                     disabled={isLoading}
                                 />
                             </FormControl>
-                            <FormDescription>¿Cuántos libros necesitas?</FormDescription>
+                            <FormDescription>How many books do you need?</FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
 
-                {/* Campo: Fecha de Inicio */}
+                {/* Field: Start Date */}
                 <FormField
                     control={form.control}
                     name="startDate"
                     render={({ field }) => (
                         <FormItem className="w-full">
-                            <FormLabel>Fecha de Inicio</FormLabel>
+                            <FormLabel>Start Date</FormLabel>
                             <FormControl>
-                                <Input type="date" placeholder="Fecha de inicio" {...field} disabled={isLoading} />
+                                <Input type="date" placeholder="Start date" {...field} disabled={isLoading} />
                             </FormControl>
-                            <FormDescription>Selecciona la fecha de inicio del préstamo.</FormDescription>
+                            <FormDescription>Select the loan start date.</FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
 
-                {/* Campo: Fecha de Devolución */}
+                {/* Field: Return Date */}
                 <FormField
                     control={form.control}
                     name="endDate"
                     render={({ field }) => (
                         <FormItem className="w-full">
-                            <FormLabel>Fecha de Devolución</FormLabel>
+                            <FormLabel>Return Date</FormLabel>
                             <FormControl>
-                                <Input
-                                    type="date"
-                                    placeholder="Fecha de devolución"
-                                    {...field}
-                                    disabled={isLoading}
-                                />
+                                <Input type="date" placeholder="Return date" {...field} disabled={isLoading} />
                             </FormControl>
-                            <FormDescription>Selecciona la fecha de devolución.</FormDescription>
+                            <FormDescription>Select the return date.</FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
 
-                {/* Botón de Enviar */}
+                {/* Submit Button */}
                 <Button
                     type="submit"
                     className="w-full flex items-center justify-center gap-2"
                     disabled={isLoading}
                 >
                     {isLoading && <Loader2 className="animate-spin" />}
-                    <p>Crear Préstamo</p>
+                    <p>Create Loan</p>
                 </Button>
             </form>
         </Form>

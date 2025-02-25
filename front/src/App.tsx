@@ -18,7 +18,6 @@ const App = () => {
                         <Routes>
                             <Route path="*" element={<Navigate to={Paths.HOME} replace />} />
 
-                            {/* Rutas públicas */}
                             <Route element={<PublicLayout />}>
                                 {routes.public.map((route, i) => (
                                     <Route key={`public-${i}`} {...route} />

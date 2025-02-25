@@ -20,7 +20,7 @@ const Account = ({ email, username, admin, created_at, className }: AccountProps
 
     const handleLogout = async () => {
         setIsLoading(true)
-        await new Promise((resolve) => setTimeout(resolve, 400)) // Simula un retraso de 400 ms
+        await new Promise((resolve) => setTimeout(resolve, 400)) // Simulates a 400ms delay
         logout()
         setIsLoading(false)
     }

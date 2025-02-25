@@ -37,7 +37,7 @@ export const Library: React.FC<LibraryProps> = ({ className }) => {
                     className="text-white"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Nombre del Libro
+                    Book Name
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             ),
@@ -51,7 +51,7 @@ export const Library: React.FC<LibraryProps> = ({ className }) => {
                     className="text-white"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Autor
+                    Author
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             ),
@@ -59,12 +59,12 @@ export const Library: React.FC<LibraryProps> = ({ className }) => {
         },
         {
             accessorKey: "genre",
-            header: "Género",
+            header: "Genre",
             cell: ({ row }) => <div className="capitalize text-white">{row.getValue("genre")}</div>,
         },
         {
             accessorKey: "publication_date",
-            header: "Fecha de Publicación",
+            header: "Publication Date",
             cell: ({ row }) => {
                 const date = new Date(row.getValue("publication_date"))
                 return <div className="text-white">{date.toLocaleDateString()}</div>
@@ -72,7 +72,7 @@ export const Library: React.FC<LibraryProps> = ({ className }) => {
         },
         {
             accessorKey: "quantity",
-            header: "Cantidad",
+            header: "Quantity",
             cell: ({ row }) => <div className="text-right font-medium text-white">{row.getValue("quantity")}</div>,
         },
     ]
@@ -97,7 +97,7 @@ export const Library: React.FC<LibraryProps> = ({ className }) => {
             {/* Barra de búsqueda */}
             <div className="flex items-center py-4">
                 <Input
-                    placeholder="Buscar libros por nombre..."
+                    placeholder="Search books by name..."
                     value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
                     onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
                     className="max-w-sm"
@@ -126,7 +126,7 @@ export const Library: React.FC<LibraryProps> = ({ className }) => {
                                 <TableCell colSpan={columns.length} className="h-24">
                                     <div className="flex items-center justify-center">
                                         <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                                        <span className="ml-2">Cargando datos...</span>
+                                        <span className="ml-2">Loading data...</span>
                                     </div>
                                 </TableCell>
                             </TableRow>
@@ -134,7 +134,7 @@ export const Library: React.FC<LibraryProps> = ({ className }) => {
                             <TableRow>
                                 <TableCell colSpan={columns.length} className="h-24">
                                     <div className="flex flex-col items-center justify-center text-destructive">
-                                        <p>Error al cargar los datos</p>
+                                        <p>Error loading data</p>
                                         <p className="text-sm text-muted-foreground">{error}</p>
                                     </div>
                                 </TableCell>
@@ -158,7 +158,7 @@ export const Library: React.FC<LibraryProps> = ({ className }) => {
                         ) : (
                             <TableRow>
                                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                                    No hay resultados.
+                                    No results found.
                                 </TableCell>
                             </TableRow>
                         )}
@@ -175,7 +175,7 @@ export const Library: React.FC<LibraryProps> = ({ className }) => {
                     onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
                 >
-                    Anterior
+                    Previous
                 </Button>
                 <Button
                     variant="secondary"
@@ -184,7 +184,7 @@ export const Library: React.FC<LibraryProps> = ({ className }) => {
                     onClick={() => table.nextPage()}
                     disabled={!table.getCanNextPage()}
                 >
-                    Siguiente
+                    Next
                 </Button>
             </div>
         </div>

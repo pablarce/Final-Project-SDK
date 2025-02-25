@@ -29,7 +29,7 @@ const registerFormSchema = z
             .min(6, { message: "Password confirmation must be at least 6 characters." })
             .max(100, { message: "Password confirmation cannot exceed 100 characters." }),
         role: z.enum(["user", "admin"], {
-            required_error: "Por favor selecciona un rol.",
+            required_error: "Please select a role.",
         }),
     })
     .refine((data) => data.password === data.confirmPassword, {
@@ -76,16 +76,16 @@ const RegisterBox: React.FC<RegisterBoxProps> = ({ className, setIsLoginPage }) 
         setError(null)
 
         if (data.password !== data.confirmPassword) {
-            setError("Las contraseñas no coinciden.")
+            setError("Passwords do not match.")
             setIsLoading(false)
             return
         }
 
         try {
-            await register(data.email, data.password, data.username, selectedRole === "admin") // Usamos `register` del contexto
-            navigate(Paths.HOME, { replace: true }) // Redirige al home después del registro
+            await register(data.email, data.password, data.username, selectedRole === "admin")
+            navigate(Paths.HOME, { replace: true })
         } catch (err: any) {
-            setError(err.message || "Hubo un problema durante el registro.")
+            setError(err.message || "There was a problem during registration.")
         } finally {
             setIsLoading(false)
         }
@@ -100,8 +100,8 @@ const RegisterBox: React.FC<RegisterBoxProps> = ({ className, setIsLoginPage }) 
                     <ArrowLeftFromLine className="w-6 h-6" />
                 </div>
                 <div className="flex flex-col items-center justify-center">
-                    <h1 className="text-xl font-bold mb-1">Registrarse</h1>
-                    <h2 className="text-sm font-light text-center">Crea tu cuenta para continuar</h2>
+                    <h1 className="text-xl font-bold mb-1">Register</h1>
+                    <h2 className="text-sm font-light text-center">Create your account to continue</h2>
                 </div>
                 <div className="w-10" />
             </div>
@@ -191,7 +191,7 @@ const RegisterBox: React.FC<RegisterBoxProps> = ({ className, setIsLoginPage }) 
                                             onClick={() => setSelectedRole("user")}
                                         >
                                             <User />
-                                            <p>Usuario</p>
+                                            <p>User</p>
                                         </div>
                                         <div
                                             className={`select-none flex flex-col items-center justify-center cursor-pointer duration-300 p-4 border w-1/2  hover:scale-100
@@ -199,7 +199,7 @@ const RegisterBox: React.FC<RegisterBoxProps> = ({ className, setIsLoginPage }) 
                                             onClick={() => setSelectedRole("admin")}
                                         >
                                             <UserRoundCog></UserRoundCog>
-                                            <p>Administrador</p>
+                                            <p>Administrator</p>
                                         </div>
                                     </div>
                                 </FormControl>
@@ -211,13 +211,13 @@ const RegisterBox: React.FC<RegisterBoxProps> = ({ className, setIsLoginPage }) 
                     {/* Submit Button */}
                     <Button type="submit" className="mt-4 w-full hover:bg-gray-700" disabled={isLoading}>
                         {isLoading && <Loader2 className="animate-spin h-5 w-5 mr-1" viewBox="0 0 24 24" />}
-                        Registrarse
+                        Register
                     </Button>
                 </form>
             </Form>
             {error && <p className="text-red-500 mt-4">{error}</p>}
             <p className="text-sm font-light text-center pt-4 ">
-                Al hacer clic en registrarse, aceptas nuestros Términos de Servicio y Política de Privacidad.
+                By clicking register, you agree to our Terms of Service and Privacy Policy.
             </p>
         </div>
     )
