@@ -4,6 +4,8 @@
 
 This is a **Library Management System**, a web application built with **React** and **TypeScript**. It allows users to **borrow books**, manage their **loans**, and authenticate with **Supabase**. The app is styled using **ShadCN** and **Tailwind CSS**, and the backend is hosted in **Supabase**.
 
+[https://final-project-sdk.vercel.app/login](https://final-project-sdk.vercel.app/login)
+
 ## 🚀 Features
 
 ### 🔐 **Authentication**
@@ -63,6 +65,7 @@ This is a **Library Management System**, a web application built with **React** 
 ## 🌐 Live Version
 
 The app is also available on Vercel. You can access it without any setup.
+Click [here](https://final-project-sdk.vercel.app/login).
 
 ## 📝 Notes
 
