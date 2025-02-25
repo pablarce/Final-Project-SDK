@@ -1,53 +1,72 @@
-# Final Project SDK
+# Final project SDK
 
-## Description
+# 📚 Library Management System
 
-This SDK (Software Development Kit) provides tools and utilities for [brief description of the SDK's main purpose].
+This is a **Library Management System**, a web application built with **React** and **TypeScript**. It allows users to **borrow books**, manage their **loans**, and authenticate with **Supabase**. The app is styled using **ShadCN** and **Tailwind CSS**, and the backend is hosted in **Supabase**.
 
-## Installation
+## 🚀 Features
 
-```bash
-npm install final-project-sdk
-# or
-yarn add final-project-sdk
-```
+### 🔐 **Authentication**
 
-## Basic Usage
+- **User Registration & Login**: Users can sign up and log in using Supabase authentication.
+- **Roles**:
+  - **Admin**: Can view all loans from every user.
+  - **User**: Can only see their own loans.
+- **Session Management**: The authentication token is stored in **local storage**, and Supabase automatically manages user sessions.
 
-```javascript
-const sdk = require("final-project-sdk");
+### 📖 **Library Functionality**
 
-// Basic usage example
-sdk.initialize({
-  // configuration
-});
-```
+- **Borrow Books**: Users can request book loans by selecting:
+  - **Book** (from available options)
+  - **Quantity** (limited to stock availability)
+  - **Start Date** & **End Date**
+- **View Loans**:
+  - Users can see **their own loans**.
+  - Admins can see **all loans**.
 
-## Key Features
+### 🔄 **Navigation**
 
-- Feature 1
-- Feature 2
-- Feature 3
+- **Login Page (`/login`)**: Allows users to register, log in, and authenticate.
+- **Main Page (`/`)**:
+  - **Tab 1**: Book borrowing functionality.
+  - **Tab 2**: Loan history (filtered by user role).
+- **Logout**: Users can log out at any time.
 
-## Documentation
+## 🛠️ Tech Stack
 
-For more detailed information about using the SDK, please refer to our [complete documentation](link-to-docs).
+- **Frontend**: [React](https://reactjs.org/) + [TypeScript](https://www.typescriptlang.org/)
+- **UI Libraries**: [ShadCN](https://ui.shadcn.com/) + [Tailwind CSS](https://tailwindcss.com/)
+- **Backend**: [Supabase](https://supabase.com/) (Cloud-hosted, no local setup required)
+- **Hosting**: [Vercel](https://vercel.com/) (You can access the live version)
 
-## System Requirements
+## 📥 Installation & Setup
 
-- Node.js v14 or higher
-- [Other requirements]
+1. **Clone the repository**:
+   ```sh
+   git clone https://github.com/pablarce/Final-Project-SDK.git
+   cd ./Final-Project-SDK/front
+   ```
+2. **Install dependencies**:
+   ```sh
+   Copiar
+   Editar
+   npm install
+   ```
+3. **Start the development server**:
+   ```sh
+   Copiar
+   Editar
+   npm run dev
+   ```
+4. **Open http://localhost:5163/ in your browser.**
 
-## Contributing
+## 🌐 Live Version
 
-Contributions are welcome. Please read our [contribution guidelines](link-to-guidelines) before submitting a pull request.
+The app is also available on Vercel. You can access it without any setup.
 
-## License
+## 📝 Notes
 
-This project is licensed under the [license type] - see the [LICENSE](LICENSE) file for details.
+- No backend setup is required since Supabase is cloud-hosted.
+- Ensure you have a valid Supabase project if you're setting up authentication or database operations.
 
-## Contact
-
-- Author: [Your name]
-- Email: [Your email]
-- GitHub: [Your GitHub profile]
+🚀 Enjoy using the Library Management System! If you have any issues or suggestions, feel free to open an issue. 🎉
