@@ -24,7 +24,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null)
 
-    // Recuperar el estado del usuario al cargar la página
+    // Recover user state when loading the page
     useEffect(() => {
         const checkSession = async () => {
             const { data } = await supabase.auth.getSession()
@@ -32,7 +32,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             if (data?.session) {
                 const userId = data.session.user.id
 
-                // Obtener datos del usuario desde la base de datos
+                // Get user data from database
                 const { data: userData, error } = await supabase
                     .from("users")
                     .select("id, username, email, admin, created_at")
@@ -51,9 +51,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const login = async (email: string, password: string) => {
         try {
             const { user: userData } = await loginUser(email, password)
-            setUser(userData) // Guardar los datos del usuario en el estado
+            setUser(userData) // Save user data in state
         } catch (error) {
-            console.error("Error en el inicio de sesión:", error)
+            console.error("Login error:", error)
             throw error
         }
     }
@@ -63,7 +63,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             const { user: userData } = await registerUser(email, password, username, admin)
             setUser(userData)
         } catch (error) {
-            console.error("Error en el registro:", error)
+            console.error("Registration error:", error)
             throw error
         }
     }
@@ -71,9 +71,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const logout = async () => {
         try {
             await logoutUser()
-            setUser(null) // Limpiar el estado del usuario
+            setUser(null) // Clear user state
         } catch (error) {
-            console.error("Error al cerrar sesión:", error)
+            console.error("Logout error:", error)
             throw error
         }
     }

@@ -31,7 +31,7 @@ export const LoansProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             const data = await fetchLoans(user.admin, user.id) // Pasamos admin y userId
             setLoans(data)
         } catch (err: any) {
-            setError(err.message || "Error al cargar los préstamos.")
+            setError(err.message || "Error loading loans.")
         } finally {
             setLoading(false)
         }
@@ -40,14 +40,14 @@ export const LoansProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     // Añadir un nuevo préstamo
     const addLoan = async (bookId: number, quantity: number, startDate: string, endDate: string) => {
         if (!user) {
-            throw new Error("Usuario no autenticado.")
+            throw new Error("User not authenticated.")
         }
         setLoading(true)
         try {
             await createLoan(bookId, quantity, startDate, endDate, user.id)
             await loadLoans() // Recargar préstamos después de crear uno nuevo
         } catch (err: any) {
-            setError(err.message || "Error al crear el préstamo.")
+            setError(err.message || "Error creating loan.")
             throw err // Re-lanza el error para manejarlo en el componente
         } finally {
             setLoading(false)
@@ -69,7 +69,7 @@ export const LoansProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 export const useLoans = (): LoansContextType => {
     const context = useContext(LoansContext)
     if (!context) {
-        throw new Error("useLoans debe usarse dentro de un LoansProvider")
+        throw new Error("useLoans must be used within a LoansProvider")
     }
     return context
 }

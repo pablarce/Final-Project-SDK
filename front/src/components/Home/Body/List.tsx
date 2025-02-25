@@ -37,7 +37,7 @@ export const List: React.FC<ListProps> = ({ className }) => {
                     className="text-white"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Book Name
+                    Nombre del Libro
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             ),
@@ -51,7 +51,7 @@ export const List: React.FC<ListProps> = ({ className }) => {
                     className="text-white"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    User
+                    Usuario
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             ),
@@ -62,14 +62,15 @@ export const List: React.FC<ListProps> = ({ className }) => {
             header: "Email",
             cell: ({ row }) => <div>{row.getValue("email")}</div>,
         },
+
         {
             accessorKey: "quantity",
-            header: "Quantity",
-            cell: ({ row }) => <div className="font-medium">{row.getValue("quantity")}</div>,
+            header: "Cantidad",
+            cell: ({ row }) => <div className="font-medium  ">{row.getValue("quantity")}</div>,
         },
         {
             accessorKey: "start_date",
-            header: "Start",
+            header: "Inicio",
             cell: ({ row }) => {
                 const date = new Date(row.getValue("start_date"))
                 return <div>{date.toLocaleDateString()}</div>
@@ -77,7 +78,7 @@ export const List: React.FC<ListProps> = ({ className }) => {
         },
         {
             accessorKey: "end_date",
-            header: "Return",
+            header: "Devolución",
             cell: ({ row }) => {
                 const date = new Date(row.getValue("end_date"))
                 return <div>{date.toLocaleDateString()}</div>
@@ -85,7 +86,7 @@ export const List: React.FC<ListProps> = ({ className }) => {
         },
         {
             accessorKey: "status",
-            header: "Status",
+            header: "Estado",
             cell: ({ row }) => {
                 const status = row.getValue("status")
                 return (
@@ -125,7 +126,7 @@ export const List: React.FC<ListProps> = ({ className }) => {
             {/* Barra de búsqueda */}
             <div className="flex items-center py-4">
                 <Input
-                    placeholder="Search by book name..."
+                    placeholder="Buscar por nombre de libro..."
                     value={(table.getColumn("book_name")?.getFilterValue() as string) ?? ""}
                     onChange={(event) => table.getColumn("book_name")?.setFilterValue(event.target.value)}
                     className="max-w-sm"
@@ -154,14 +155,14 @@ export const List: React.FC<ListProps> = ({ className }) => {
                                 <TableCell colSpan={columns.length} className="h-24">
                                     <div className="flex items-center justify-center">
                                         <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                                        <span className="ml-2">Loading data...</span>
+                                        <span className="ml-2">Cargando datos...</span>
                                     </div>
                                 </TableCell>
                             </TableRow>
                         ) : error ? (
                             <TableRow>
                                 <TableCell colSpan={columns.length} className="h-24 text-red-600 text-center">
-                                    Error loading data.
+                                    Error al cargar los datos.
                                 </TableCell>
                             </TableRow>
                         ) : table.getRowModel().rows?.length ? (
@@ -177,7 +178,7 @@ export const List: React.FC<ListProps> = ({ className }) => {
                         ) : (
                             <TableRow>
                                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                                    No results found.
+                                    No hay resultados.
                                 </TableCell>
                             </TableRow>
                         )}
@@ -190,20 +191,20 @@ export const List: React.FC<ListProps> = ({ className }) => {
                 <Button
                     variant="secondary"
                     size="sm"
-                    className="text-black"
+                    className=" text-black"
                     onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
                 >
-                    Previous
+                    Anterior
                 </Button>
                 <Button
                     variant="secondary"
                     size="sm"
-                    className="text-black"
+                    className=" text-black"
                     onClick={() => table.nextPage()}
                     disabled={!table.getCanNextPage()}
                 >
-                    Next
+                    Siguiente
                 </Button>
             </div>
         </div>
