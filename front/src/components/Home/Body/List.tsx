@@ -37,7 +37,7 @@ export const List: React.FC<ListProps> = ({ className }) => {
                     className="text-white"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Nombre del Libro
+                    Book Name
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             ),
@@ -51,7 +51,7 @@ export const List: React.FC<ListProps> = ({ className }) => {
                     className="text-white"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Usuario
+                    User
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             ),
@@ -65,12 +65,12 @@ export const List: React.FC<ListProps> = ({ className }) => {
 
         {
             accessorKey: "quantity",
-            header: "Cantidad",
+            header: "Quantity",
             cell: ({ row }) => <div className="font-medium  ">{row.getValue("quantity")}</div>,
         },
         {
             accessorKey: "start_date",
-            header: "Inicio",
+            header: "Start Date",
             cell: ({ row }) => {
                 const date = new Date(row.getValue("start_date"))
                 return <div>{date.toLocaleDateString()}</div>
@@ -78,7 +78,7 @@ export const List: React.FC<ListProps> = ({ className }) => {
         },
         {
             accessorKey: "end_date",
-            header: "Devolución",
+            header: "Return Date",
             cell: ({ row }) => {
                 const date = new Date(row.getValue("end_date"))
                 return <div>{date.toLocaleDateString()}</div>
@@ -86,7 +86,7 @@ export const List: React.FC<ListProps> = ({ className }) => {
         },
         {
             accessorKey: "status",
-            header: "Estado",
+            header: "Status",
             cell: ({ row }) => {
                 const status = row.getValue("status")
                 return (
@@ -123,17 +123,17 @@ export const List: React.FC<ListProps> = ({ className }) => {
 
     return (
         <div className={`w-full text-white p-6 bg-main-gradient ${className}`}>
-            {/* Barra de búsqueda */}
+            {/* Search bar */}
             <div className="flex items-center py-4">
                 <Input
-                    placeholder="Buscar por nombre de libro..."
+                    placeholder="Search by book name..."
                     value={(table.getColumn("book_name")?.getFilterValue() as string) ?? ""}
                     onChange={(event) => table.getColumn("book_name")?.setFilterValue(event.target.value)}
                     className="max-w-sm"
                 />
             </div>
 
-            {/* Tabla de datos */}
+            {/* Data table */}
             <div className="rounded-md border min-h-[420px]">
                 <Table>
                     <TableHeader>
@@ -155,14 +155,14 @@ export const List: React.FC<ListProps> = ({ className }) => {
                                 <TableCell colSpan={columns.length} className="h-24">
                                     <div className="flex items-center justify-center">
                                         <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                                        <span className="ml-2">Cargando datos...</span>
+                                        <span className="ml-2">Loading data...</span>
                                     </div>
                                 </TableCell>
                             </TableRow>
                         ) : error ? (
                             <TableRow>
                                 <TableCell colSpan={columns.length} className="h-24 text-red-600 text-center">
-                                    Error al cargar los datos.
+                                    Error loading data.
                                 </TableCell>
                             </TableRow>
                         ) : table.getRowModel().rows?.length ? (
@@ -178,7 +178,7 @@ export const List: React.FC<ListProps> = ({ className }) => {
                         ) : (
                             <TableRow>
                                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                                    No hay resultados.
+                                    No results found.
                                 </TableCell>
                             </TableRow>
                         )}
@@ -186,25 +186,25 @@ export const List: React.FC<ListProps> = ({ className }) => {
                 </Table>
             </div>
 
-            {/* Paginación */}
+            {/* Pagination */}
             <div className="flex items-center justify-end space-x-2 py-4">
                 <Button
                     variant="secondary"
                     size="sm"
-                    className=" text-black"
+                    className="text-black"
                     onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
                 >
-                    Anterior
+                    Previous
                 </Button>
                 <Button
                     variant="secondary"
                     size="sm"
-                    className=" text-black"
+                    className="text-black"
                     onClick={() => table.nextPage()}
                     disabled={!table.getCanNextPage()}
                 >
-                    Siguiente
+                    Next
                 </Button>
             </div>
         </div>

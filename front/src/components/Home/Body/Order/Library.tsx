@@ -18,6 +18,8 @@ import { Button } from "@/components/ui/Button/Button"
 import { Input } from "@/components/ui/Input/Input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/Table/Table"
 
+import CreateBook from "./CreateBook/CreateBook"
+
 interface LibraryProps {
     className?: string
 }
@@ -95,13 +97,21 @@ export const Library: React.FC<LibraryProps> = ({ className }) => {
     return (
         <div className={`w-full text-white p-6 ${className}`}>
             {/* Barra de búsqueda */}
-            <div className="flex items-center py-4">
+            <div className="flex items-center py-4 ">
                 <Input
                     placeholder="Search books by name..."
                     value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
                     onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
                     className="max-w-sm"
                 />
+                <div className="ml-auto pl-2 gap-2 flex items-center">
+                    {/*
+                    <Button>
+                        <Pencil />
+                    </Button>
+                    */}
+                    <CreateBook className="bg-gray-700 p-2 rounded-xl border" />
+                </div>
             </div>
 
             {/* Tabla de datos */}
