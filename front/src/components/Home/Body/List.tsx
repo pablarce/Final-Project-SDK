@@ -122,7 +122,7 @@ export const List: React.FC<ListProps> = ({ className }) => {
     })
 
     return (
-        <div className={`w-full text-white p-6 bg-main-gradient ${className}`}>
+        <div className={`w-full text-white p-6 bg-main-gradient h-full ${className}`}>
             {/* Search bar */}
             <div className="flex items-center py-4">
                 <Input
