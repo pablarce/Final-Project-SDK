@@ -108,8 +108,8 @@ export const Library: React.FC<LibraryProps> = ({ className }) => {
                     className="max-w-sm"
                 />
                 <div className="ml-auto pl-2 gap-2 flex items-center">
-                    <EditBook className="bg-gray-700 p-2 rounded-xl border cursor-pointer" />
-                    <CreateBook className="bg-gray-700 p-2 rounded-xl border" />
+                    <EditBook className="bg-gray-700 p-2 rounded-xl border cursor-pointer hover:bg-gray-600" />
+                    <CreateBook className="bg-gray-700 p-2 rounded-xl border cursor-pointer hover:bg-gray-600" />
                 </div>
             </div>
 

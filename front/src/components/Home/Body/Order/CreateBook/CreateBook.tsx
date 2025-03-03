@@ -59,18 +59,18 @@ const CreateBook: React.FC<CreateBookProps> = ({ className }) => {
             })
 
             toast({
-                title: "Éxito",
-                description: "Libro creado correctamente",
+                title: "Success",
+                description: "Book created successfully",
                 variant: "default",
             })
 
             form.reset()
             setOpen(false)
         } catch (error) {
-            console.error("Error al crear libro:", error)
+            console.error("Error creating book:", error)
             toast({
                 title: "Error",
-                description: "No se pudo crear el libro. Inténtalo de nuevo.",
+                description: "Could not create the book. Please try again.",
                 variant: "destructive",
             })
         } finally {
@@ -160,10 +160,10 @@ const CreateBook: React.FC<CreateBookProps> = ({ className }) => {
 
                         <div className="flex justify-end gap-2 pt-2">
                             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
-                                Cancelar
+                                Cancel
                             </Button>
                             <Button type="submit" disabled={isSubmitting}>
-                                {isSubmitting ? "Enviando..." : "Crear Libro"}
+                                {isSubmitting ? "Sending..." : "Create Book"}
                             </Button>
                         </div>
                     </form>

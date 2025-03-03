@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useLibrary } from "@/context/LibraryContext"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Pencil } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -17,7 +18,6 @@ import {
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/Form/Form"
 import { Input } from "@/components/ui/Input/Input"
 import { Label } from "@/components/ui/Label/Label"
-import { Pencil } from "lucide-react"
 
 const formSchema = z.object({
     name: z.string().min(1, "Name is required"),
@@ -38,7 +38,7 @@ const EditBook: React.FC<EditBookProps> = ({ className }) => {
     const { toast } = useToast()
 
     // Encontrar el libro seleccionado
-    const selectedBook = libraryData?.find(book => book.id === idSelected)
+    const selectedBook = libraryData?.find((book) => book.id === idSelected)
 
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -68,7 +68,7 @@ const EditBook: React.FC<EditBookProps> = ({ className }) => {
         if (!idSelected || idSelected === "-1") {
             toast({
                 title: "Error",
-                description: "Debes seleccionar un libro para editar",
+                description: "You must select a book to edit",
                 variant: "destructive",
             })
             return
@@ -85,17 +85,17 @@ const EditBook: React.FC<EditBookProps> = ({ className }) => {
             })
 
             toast({
-                title: "Éxito",
-                description: "Libro actualizado correctamente",
+                title: "Success",
+                description: "Book updated successfully",
                 variant: "default",
             })
 
             setOpen(false)
         } catch (error) {
-            console.error("Error al actualizar libro:", error)
+            console.error("Error updating book:", error)
             toast({
                 title: "Error",
-                description: "No se pudo actualizar el libro. Inténtalo de nuevo.",
+                description: "Could not update the book. Please try again.",
                 variant: "destructive",
             })
         } finally {
@@ -107,15 +107,15 @@ const EditBook: React.FC<EditBookProps> = ({ className }) => {
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger 
-                className={className} 
+            <DialogTrigger
+                className={className}
                 disabled={!isBookSelected}
                 onClick={(e) => {
                     if (!isBookSelected) {
                         e.preventDefault()
                         toast({
-                            title: "Selecciona un libro",
-                            description: "Debes seleccionar un libro para editarlo",
+                            title: "Select a book",
+                            description: "You must select a book to edit it",
                             variant: "destructive",
                         })
                     }
@@ -125,8 +125,8 @@ const EditBook: React.FC<EditBookProps> = ({ className }) => {
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Editar Libro</DialogTitle>
-                    <DialogDescription>Modifica los detalles del libro seleccionado.</DialogDescription>
+                    <DialogTitle>Edit Book</DialogTitle>
+                    <DialogDescription>Modify the details of the selected book.</DialogDescription>
                 </DialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -202,10 +202,10 @@ const EditBook: React.FC<EditBookProps> = ({ className }) => {
 
                         <div className="flex justify-end gap-2 pt-2">
                             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
-                                Cancelar
+                                Cancel
                             </Button>
                             <Button type="submit" disabled={isSubmitting}>
-                                {isSubmitting ? "Guardando..." : "Actualizar Libro"}
+                                {isSubmitting ? "Saving..." : "Update Book"}
                             </Button>
                         </div>
                     </form>

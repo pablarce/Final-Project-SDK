@@ -71,10 +71,10 @@ export const LibraryProvider: React.FC<{ children: React.ReactNode }> = ({ child
         setError(null)
         try {
             await createBookService(bookData)
-            // Recargar los datos después de crear el libro
+            // Reload data after creating the book
             await loadLibraryData()
         } catch (err: any) {
-            setError(err.message || "Error al crear el libro")
+            setError(err.message || "Error creating the book")
             throw err
         } finally {
             setLoading(false)
@@ -96,10 +96,10 @@ export const LibraryProvider: React.FC<{ children: React.ReactNode }> = ({ child
         setError(null)
         try {
             await updateBookService(libraryId, bookData)
-            // Recargar los datos después de actualizar el libro
+            // Reload data after updating the book
             await loadLibraryData()
         } catch (err: any) {
-            setError(err.message || "Error al actualizar el libro")
+            setError(err.message || "Error updating the book")
             throw err
         } finally {
             setLoading(false)
