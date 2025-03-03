@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/Input/Input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/Table/Table"
 
 import CreateBook from "./CreateBook/CreateBook"
+import EditBook from "./EditBook/EditBook"
 
 interface LibraryProps {
     className?: string
@@ -107,11 +108,7 @@ export const Library: React.FC<LibraryProps> = ({ className }) => {
                     className="max-w-sm"
                 />
                 <div className="ml-auto pl-2 gap-2 flex items-center">
-                    {/*
-                    <Button>
-                        <Pencil />
-                    </Button>
-                    */}
+                    <EditBook className="bg-gray-700 p-2 rounded-xl border cursor-pointer" />
                     <CreateBook className="bg-gray-700 p-2 rounded-xl border" />
                 </div>
             </div>
@@ -183,7 +180,7 @@ export const Library: React.FC<LibraryProps> = ({ className }) => {
                 <Button
                     variant="secondary"
                     size="sm"
-                    className=" text-black"
+                    className="text-black"
                     onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
                 >
@@ -192,7 +189,7 @@ export const Library: React.FC<LibraryProps> = ({ className }) => {
                 <Button
                     variant="secondary"
                     size="sm"
-                    className=" text-black"
+                    className="text-black"
                     onClick={() => table.nextPage()}
                     disabled={!table.getCanNextPage()}
                 >

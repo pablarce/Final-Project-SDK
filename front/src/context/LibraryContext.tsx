@@ -1,6 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from "react"
 
-import { createBook as createBookService, fetchLibraryData } from "@/services/library"
+import {
+    createBook as createBookService,
+    fetchLibraryData,
+    updateBook as updateBookService,
+} from "@/services/library"
 import { LibraryBook } from "@/lib/types"
 
 // Tipo para el contexto
@@ -18,6 +22,16 @@ interface LibraryContextType {
         publication_date: string
         quantity: number
     }) => Promise<void>
+    updateBook: (
+        libraryId: string,
+        bookData: {
+            name?: string
+            author?: string
+            genre?: string
+            publication_date?: string
+            quantity?: number
+        }
+    ) => Promise<void>
 }
 
 // Contexto de la librería
@@ -67,6 +81,31 @@ export const LibraryProvider: React.FC<{ children: React.ReactNode }> = ({ child
         }
     }
 
+    // Función para actualizar un libro existente
+    const updateBook = async (
+        libraryId: string,
+        bookData: {
+            name?: string
+            author?: string
+            genre?: string
+            publication_date?: string
+            quantity?: number
+        }
+    ) => {
+        setLoading(true)
+        setError(null)
+        try {
+            await updateBookService(libraryId, bookData)
+            // Recargar los datos después de actualizar el libro
+            await loadLibraryData()
+        } catch (err: any) {
+            setError(err.message || "Error al actualizar el libro")
+            throw err
+        } finally {
+            setLoading(false)
+        }
+    }
+
     // Efecto para cargar los datos al iniciar
     useEffect(() => {
         loadLibraryData()
@@ -82,6 +121,7 @@ export const LibraryProvider: React.FC<{ children: React.ReactNode }> = ({ child
                 idSelected,
                 setIdSelected,
                 createBook,
+                updateBook,
             }}
         >
             {children}

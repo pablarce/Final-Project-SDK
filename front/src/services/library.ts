@@ -124,3 +124,77 @@ export const fetchBookById = async (id: number): Promise<LibraryBook> => {
         publication_date: data.books.publication_date,
     }
 }
+
+// Función para actualizar un libro existente
+export const updateBook = async (
+    libraryId: string,
+    bookData: {
+        name?: string
+        author?: string
+        genre?: string
+        publication_date?: string
+        quantity?: number
+    }
+): Promise<LibraryBook> => {
+    // Primero obtenemos los datos actuales del libro
+    const { data: currentData, error: fetchError } = await supabase
+        .from("library")
+        .select(
+            `
+            id,
+            book_id,
+            quantity,
+            books:books (
+                id,
+                name,
+                author,
+                genre,
+                publication_date
+            )
+        `
+        )
+        .eq("id", libraryId)
+        .single()
+
+    if (fetchError) {
+        console.error("Error al obtener datos del libro:", fetchError.message)
+        throw fetchError
+    }
+
+    // Separamos los datos que van a cada tabla
+    const bookId = currentData.book_id
+    const bookUpdates: any = {}
+    const libraryUpdates: any = {}
+
+    // Preparamos las actualizaciones para la tabla books
+    if (bookData.name !== undefined) bookUpdates.name = bookData.name
+    if (bookData.author !== undefined) bookUpdates.author = bookData.author
+    if (bookData.genre !== undefined) bookUpdates.genre = bookData.genre
+    if (bookData.publication_date !== undefined) bookUpdates.publication_date = bookData.publication_date
+
+    // Preparamos las actualizaciones para la tabla library
+    if (bookData.quantity !== undefined) libraryUpdates.quantity = bookData.quantity
+
+    // Actualizamos la tabla books si hay cambios
+    if (Object.keys(bookUpdates).length > 0) {
+        const { error: bookError } = await supabase.from("books").update(bookUpdates).eq("id", bookId)
+
+        if (bookError) {
+            console.error("Error al actualizar libro:", bookError.message)
+            throw bookError
+        }
+    }
+
+    // Actualizamos la tabla library si hay cambios
+    if (Object.keys(libraryUpdates).length > 0) {
+        const { error: libraryError } = await supabase.from("library").update(libraryUpdates).eq("id", libraryId)
+
+        if (libraryError) {
+            console.error("Error al actualizar cantidad en biblioteca:", libraryError.message)
+            throw libraryError
+        }
+    }
+
+    // Obtenemos y devolvemos el libro actualizado
+    return await fetchBookById(libraryId)
+}
