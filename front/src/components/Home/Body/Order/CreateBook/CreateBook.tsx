@@ -1,7 +1,10 @@
+import { useState } from "react"
+import { useLibrary } from "@/context/LibraryContext"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/Button/Button"
 import {
     Dialog,
@@ -20,7 +23,7 @@ const formSchema = z.object({
     author: z.string().min(1, "Author is required"),
     genre: z.string().min(1, "Genre is required"),
     publication_date: z.string().min(1, "Publication date is required"),
-    quantity: z.string().min(1, "Quantity is required"),
+    quantity: z.coerce.number().min(1, "Quantity must be greater than 0"),
 })
 
 interface CreateBookProps {
@@ -28,6 +31,11 @@ interface CreateBookProps {
 }
 
 const CreateBook: React.FC<CreateBookProps> = ({ className }) => {
+    const { createBook } = useLibrary()
+    const [open, setOpen] = useState(false)
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const { toast } = useToast()
+
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -35,16 +43,43 @@ const CreateBook: React.FC<CreateBookProps> = ({ className }) => {
             author: "",
             genre: "",
             publication_date: "",
-            quantity: "",
+            quantity: 0,
         },
     })
 
-    const onSubmit = (data: any) => {
-        console.log("Book Data:", data)
+    const onSubmit = async (data: z.infer<typeof formSchema>) => {
+        setIsSubmitting(true)
+        try {
+            await createBook({
+                name: data.name,
+                author: data.author,
+                genre: data.genre,
+                publication_date: data.publication_date,
+                quantity: data.quantity,
+            })
+
+            toast({
+                title: "Éxito",
+                description: "Libro creado correctamente",
+                variant: "default",
+            })
+
+            form.reset()
+            setOpen(false)
+        } catch (error) {
+            console.error("Error al crear libro:", error)
+            toast({
+                title: "Error",
+                description: "No se pudo crear el libro. Inténtalo de nuevo.",
+                variant: "destructive",
+            })
+        } finally {
+            setIsSubmitting(false)
+        }
     }
 
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger className={className}>Create Book</DialogTrigger>
             <DialogContent>
                 <DialogHeader>
@@ -123,7 +158,14 @@ const CreateBook: React.FC<CreateBookProps> = ({ className }) => {
                             )}
                         />
 
-                        <Button type="submit">Submit</Button>
+                        <div className="flex justify-end gap-2 pt-2">
+                            <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+                                Cancelar
+                            </Button>
+                            <Button type="submit" disabled={isSubmitting}>
+                                {isSubmitting ? "Enviando..." : "Crear Libro"}
+                            </Button>
+                        </div>
                     </form>
                 </Form>
             </DialogContent>

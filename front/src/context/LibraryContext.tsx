@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react"
 
-import { fetchLibraryData } from "@/services/library"
+import { createBook as createBookService, fetchLibraryData } from "@/services/library"
 import { LibraryBook } from "@/lib/types"
 
 // Tipo para el contexto
@@ -11,6 +11,13 @@ interface LibraryContextType {
     refetch: () => void // Función para recargar los datos
     idSelected: string
     setIdSelected: React.Dispatch<React.SetStateAction<string>>
+    createBook: (bookData: {
+        name: string
+        author: string
+        genre: string
+        publication_date: string
+        quantity: number
+    }) => Promise<void>
 }
 
 // Contexto de la librería
@@ -38,6 +45,28 @@ export const LibraryProvider: React.FC<{ children: React.ReactNode }> = ({ child
         }
     }
 
+    // Función para crear un nuevo libro
+    const createBook = async (bookData: {
+        name: string
+        author: string
+        genre: string
+        publication_date: string
+        quantity: number
+    }) => {
+        setLoading(true)
+        setError(null)
+        try {
+            await createBookService(bookData)
+            // Recargar los datos después de crear el libro
+            await loadLibraryData()
+        } catch (err: any) {
+            setError(err.message || "Error al crear el libro")
+            throw err
+        } finally {
+            setLoading(false)
+        }
+    }
+
     // Efecto para cargar los datos al iniciar
     useEffect(() => {
         loadLibraryData()
@@ -45,7 +74,15 @@ export const LibraryProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
     return (
         <LibraryContext.Provider
-            value={{ libraryData, loading, error, refetch: loadLibraryData, idSelected, setIdSelected }}
+            value={{
+                libraryData,
+                loading,
+                error,
+                refetch: loadLibraryData,
+                idSelected,
+                setIdSelected,
+                createBook,
+            }}
         >
             {children}
         </LibraryContext.Provider>
