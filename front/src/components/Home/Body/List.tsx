@@ -59,18 +59,18 @@ export const List: React.FC<ListProps> = ({ className }) => {
         },
         {
             accessorKey: "email",
-            header: "Email",
+            header: () => <p className="text-white">Email</p>,
             cell: ({ row }) => <div>{row.getValue("email")}</div>,
         },
 
         {
             accessorKey: "quantity",
-            header: "Quantity",
+            header: () => <p className="text-white">Quantity</p>,
             cell: ({ row }) => <div className="font-medium  ">{row.getValue("quantity")}</div>,
         },
         {
             accessorKey: "start_date",
-            header: "Start Date",
+            header: () => <p className="text-white">Start date</p>,
             cell: ({ row }) => {
                 const date = new Date(row.getValue("start_date"))
                 return <div>{date.toLocaleDateString()}</div>
@@ -78,7 +78,7 @@ export const List: React.FC<ListProps> = ({ className }) => {
         },
         {
             accessorKey: "end_date",
-            header: "Return Date",
+            header: () => <p className="text-white">Return date</p>,
             cell: ({ row }) => {
                 const date = new Date(row.getValue("end_date"))
                 return <div>{date.toLocaleDateString()}</div>
@@ -86,7 +86,7 @@ export const List: React.FC<ListProps> = ({ className }) => {
         },
         {
             accessorKey: "status",
-            header: "Status",
+            header: () => <p className="text-white">Status</p>,
             cell: ({ row }) => {
                 const status = row.getValue("status")
                 return (

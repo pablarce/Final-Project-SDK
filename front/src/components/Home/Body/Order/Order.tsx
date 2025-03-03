@@ -12,7 +12,7 @@ interface OrderProps {
 
 const Order: React.FC<OrderProps> = ({ className }) => {
     const { refetch } = useLibrary()
-    const [isCooldown, setIsCooldown] = useState(false) // Estado para manejar el cooldown
+    const [isCooldown, setIsCooldown] = useState(false)
     const cooldownRef = useRef<NodeJS.Timeout | null>(null)
 
     // Función para manejar el refetch con cooldown

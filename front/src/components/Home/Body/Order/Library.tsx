@@ -61,12 +61,12 @@ export const Library: React.FC<LibraryProps> = ({ className }) => {
         },
         {
             accessorKey: "genre",
-            header: "Genre",
+            header: () => <p className="text-white">Genre</p>,
             cell: ({ row }) => <div className="capitalize text-white">{row.getValue("genre")}</div>,
         },
         {
             accessorKey: "publication_date",
-            header: "Publication Date",
+            header: () => <p className="text-white">Publication date</p>,
             cell: ({ row }) => {
                 const date = new Date(row.getValue("publication_date"))
                 return <div className="text-white">{date.toLocaleDateString()}</div>
@@ -74,8 +74,10 @@ export const Library: React.FC<LibraryProps> = ({ className }) => {
         },
         {
             accessorKey: "quantity",
-            header: "Quantity",
-            cell: ({ row }) => <div className="text-right font-medium text-white">{row.getValue("quantity")}</div>,
+            header: () => <p className="text-white">Quantity</p>,
+            cell: ({ row }) => (
+                <div className="text-center font-medium text-white">{row.getValue("quantity")}</div>
+            ),
         },
     ]
 
@@ -135,7 +137,7 @@ export const Library: React.FC<LibraryProps> = ({ className }) => {
                             <TableRow>
                                 <TableCell colSpan={columns.length} className="h-24">
                                     <div className="flex items-center justify-center">
-                                        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                                        <Loader2 className="h-8 w-8 animate-spin text-primary text-white" />
                                         <span className="ml-2">Loading data...</span>
                                     </div>
                                 </TableCell>
