@@ -16,6 +16,50 @@ The Library Management System is a full-featured web application that enables us
 - Role-based access (Admin/User)
 - Session management via Supabase Auth
 
+### 🔒 Security Measures
+
+#### Authentication Security
+
+- **Password Security**:
+  - Argon2id hashing algorithm
+  - Automatic password strength validation
+  - Protection against brute force attacks
+
+#### Session Management
+
+- **JWT (JSON Web Tokens)**:
+  - Secure token generation and validation
+  - Automatic token refresh
+  - Encrypted payload
+  - Configurable expiration times
+
+#### Data Protection
+
+- **Row Level Security (RLS)**:
+  - Fine-grained access control
+  - Automatic data filtering based on user role
+  - Prevention of unauthorized data access
+
+#### API Security
+
+- **CORS Protection**:
+  - Configured allowed origins
+  - Secure cross-origin requests
+- **XSS Prevention**:
+  - Content Security Policy (CSP) headers
+  - Input sanitization
+- **CSRF Protection**:
+  - Token validation
+  - Same-origin policy enforcement
+
+#### Infrastructure Security
+
+- **Supabase Platform**:
+  - SOC2 Type 1 compliant
+  - Regular security audits
+  - Automated backup systems
+  - 24/7 monitoring
+
 ### Library Operations
 
 - Browse available books
