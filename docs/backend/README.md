@@ -1,124 +1,22 @@
-# 📚 Library Manager - Project Documentation
+# 🏗️ Library Manager Backend Documentation
 
 ## Table of Contents
 
-- [API Documentation](#api-documentation)
 - [Database Architecture](#database-architecture)
-  - [Database Schema](#database-schema)
-  - [Supabase Auth Integration](#supabase-auth-integration)
+  - [Database Overview](#database-overview)
+  - [Entity Relationships](#entity-relationships)
+  - [Supabase Integration](#supabase-integration)
 - [Environment Setup](#environment-setup)
 
-## 🔗 API Documentation
+## Database Architecture
 
-> All API calls are made from the React client using Supabase.
-
-### 📖 Library Management (`/library.ts`)
-
-#### List All Books
-
-```typescript
-GET /library
-
-Response: {
-  id: number,
-  name: string,
-  author: string,
-  genre: string,
-  publication_date: string,
-  quantity: number
-}[]
-```
-
-#### Add New Book
-
-```typescript
-POST /library
-
-Body: {
-  name: string,
-  author: string,
-  genre: string,
-  publication_date: string,
-  quantity: number
-}
-```
-
-#### Update Book
-
-```typescript
-PUT /library/:id
-
-Body: {
-  name?: string,
-  author?: string,
-  genre?: string,
-  publication_date?: string,
-  quantity?: number
-}
-```
-
-### 📋 Loan Management (`/loans.ts`)
-
-#### Get Loans
-
-```typescript
-GET /loans
-
-// Returns all loans (admin) or logged-in user's loans
-Response: {
-  id: number,
-  book_name: string,
-  quantity: number,
-  username: string,
-  status: string,
-  start_date: string,
-  end_date: string
-}[]
-```
-
-#### Create Loan
-
-```typescript
-POST /loans
-
-Body: {
-  bookId: number,
-  quantity: number,
-  startDate: string,
-  endDate: string,
-  userId: string
-}
-```
-
-### 👤 User Management (`/users.ts`)
-
-#### Register User
-
-```typescript
-POST /register
-
-Body: {
-  email: string,
-  password: string,
-  username: string,
-  admin: boolean
-}
-```
-
-#### Authentication
-
-```typescript
-POST / login; // Login with email and password
-POST / logout; // End current session
-```
-
-## 🏗️ Database Architecture
-
-### Database Diagram
+### Database Overview
 
 ![Database Structure](database.png)
 
-### Entity Relationship Diagram (Technical)
+Our database is built on Supabase and consists of several interconnected tables that manage the library system's data. The diagram above shows the relationship between these tables and their fields.
+
+### Entity Relationships
 
 ```mermaid
 erDiagram
@@ -167,81 +65,100 @@ erDiagram
     }
 ```
 
-### 🔐 Supabase Auth Integration
+### Table Descriptions
 
-User management in our application integrates with Supabase's authentication system as follows:
+#### 📚 Books
+
+Core table storing book information:
+
+- `id`: Primary Key
+- `name`: Book title
+- `author`: Book author
+- `genre`: Book genre
+- `publication_date`: Publication date
+
+#### 📦 Library
+
+Manages book inventory:
+
+- `id`: Primary Key
+- `book_id`: Reference to books table
+- `quantity`: Available copies
+
+#### 📝 Loans
+
+Tracks book loans:
+
+- `id`: Primary Key
+- `book_id`: Reference to borrowed book
+- `user_id`: Reference to borrowing user
+- `quantity`: Number of copies borrowed
+- `start_date`: Loan start date
+- `end_date`: Due date
+- `status`: Loan status
+
+#### 👥 Users
+
+Stores user information:
+
+- `id`: Primary Key (UUID)
+- `username`: User's display name
+- `email`: User's email
+- `admin`: Administrative privileges
+- `created_at`: Account creation timestamp
+
+### Key Relationships
+
+- Books ↔ Library: One-to-one inventory mapping
+- Books ↔ Loans: One-to-many lending relationship
+- Users ↔ Loans: One-to-many borrowing relationship
+- Users ↔ auth.users: One-to-one authentication mapping
+
+## 🔐 Supabase Integration
+
+### Authentication System
+
+The application leverages Supabase's built-in authentication system through a dual-table approach:
 
 1. **`auth.users` Table**:
 
-   - Native Supabase table that handles authentication
-   - Stores credentials and sensitive data (encrypted passwords, tokens)
-   - Automatically managed by Supabase Auth
+   - Managed by Supabase Auth
+   - Handles authentication and security
+   - Stores:
+     - Encrypted passwords
+     - Email verification status
+     - Security tokens
+     - Session data
 
 2. **`public.users` Table**:
-   - Our custom table that extends user information
-   - Links to `auth.users` through the `id` field (UUID)
-   - Stores application-specific data (username, admin role, etc.)
+   - Custom application table
+   - Extends user profiles
+   - Links to `auth.users` via UUID
+   - Stores application-specific data
 
-#### Registration Flow:
+### Security Implementation
 
-1. When a user registers, a record is first created in `auth.users`
-2. Immediately after, using the generated UUID, we create a record in our `public.users` table
-3. Supabase's RLS (Row Level Security) policies ensure users can only access their own data
+#### Row Level Security (RLS)
+
+Supabase RLS policies protect data access:
 
 ```sql
--- Example RLS policy for users table
+-- Users can only view their own data
 CREATE POLICY "Users can only view their own data"
 ON public.users
 FOR SELECT
 USING (auth.uid() = id);
 ```
 
-## 🗄️ Database Schema
+#### Registration Process
 
-### Tables
-
-#### 📚 books
-
-- `id`: Primary Key
-- `name`: string
-- `author`: string
-- `genre`: string
-- `publication_date`: date
-
-#### 📦 library
-
-- `id`: Primary Key
-- `book_id`: Foreign Key
-- `quantity`: number
-
-#### 📝 loans
-
-- `id`: Primary Key
-- `book_id`: Foreign Key
-- `user_id`: Foreign Key
-- `quantity`: number
-- `start_date`: date
-- `end_date`: date
-- `status`: string
-
-#### 👥 users
-
-- `id`: Primary Key
-- `username`: string
-- `email`: string
-- `admin`: boolean
-- `created_at`: timestamp
-
-### Relationships
-
-- `library.book_id` → `books.id`
-- `loans.book_id` → `books.id`
-- `loans.user_id` → `users.id`
-- `users.id` ↔ `auth.users.id`
+1. User registration creates `auth.users` entry
+2. Trigger creates corresponding `public.users` record
+3. RLS policies activate for new user
 
 ## ⚙️ Environment Setup
 
-Create a `.env` file based on the following template:
+Configure your environment by creating a `.env` file:
 
 ```env
 VITE_SUPABASE_URL=https://xxxx.supabase.co
