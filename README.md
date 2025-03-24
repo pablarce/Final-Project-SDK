@@ -1,71 +1,65 @@
-# Final project SDK
-
 # 📚 Library Management System
 
-This is a **Library Management System**, a web application built with **React** and **TypeScript**. It allows users to **borrow books**, manage their **loans**, and authenticate with **Supabase**. The app is styled using **ShadCN** and **Tailwind CSS**, and the backend is hosted in **Supabase**.
+A modern web application for managing library resources, built with React and powered by Supabase.
 
-[https://final-project-sdk.vercel.app/login](https://final-project-sdk.vercel.app/login)
+[Live Demo](https://final-project-sdk.vercel.app/login)
 
-## 🚀 Features
+## 🌟 Overview
 
-### 🔐 **Authentication**
+The Library Management System is a full-featured web application that enables users to borrow books, manage loans, and handle library resources efficiently. Built with modern web technologies and a focus on user experience.
 
-- **User Registration & Login**: Users can sign up and log in using Supabase authentication.
-- **Roles**:
-  - **Admin**: Can view all loans from every user.
-  - **User**: Can only see their own loans.
-- **Session Management**: The authentication token is stored in **local storage**, and Supabase automatically manages user sessions.
+## 📱 Core Features
 
-### 📖 **Library Functionality**
+### Authentication & Authorization
 
-- **Borrow Books**: Users can request book loans by selecting:
-  - **Book** (from available options)
-  - **Quantity** (limited to stock availability)
-  - **Start Date** & **End Date**
-- **View Loans**:
-  - Users can see **their own loans**.
-  - Admins can see **all loans**.
+- Secure user registration and login
+- Role-based access (Admin/User)
+- Session management via Supabase Auth
 
-### 🔄 **Navigation**
+### Library Operations
 
-- **Login Page (`/login`)**: Allows users to register, log in, and authenticate.
-- **Main Page (`/`)**:
-  - **Tab 1**: Book borrowing functionality.
-  - **Tab 2**: Loan history (filtered by user role).
-- **Logout**: Users can log out at any time.
+- Browse available books
+- Manage book loans
+- Track loan history
+- Stock management
 
-## 🛠️ Tech Stack
+### User Interface
 
-- **Frontend**: [React](https://reactjs.org/) + [TypeScript](https://www.typescriptlang.org/)
-- **UI Libraries**: [ShadCN](https://ui.shadcn.com/) + [Tailwind CSS](https://tailwindcss.com/)
-- **Backend**: [Supabase](https://supabase.com/) (Cloud-hosted, no local setup required)
-- **Hosting**: [Vercel](https://vercel.com/) (You can access the live version)
+- Clean, modern design with ShadCN
+- Responsive layout
+- Intuitive navigation
+- Role-specific views
 
-## 📥 Installation & Setup
+## 🔧 Technology Stack
 
-1. **Clone the repository**:
-   ```sh
-   git clone https://github.com/pablarce/Final-Project-SDK.git
-   cd ./Final-Project-SDK/front
-   ```
-2. **Install dependencies**:
-   ```sh
-   npm install
-   ```
-3. **Start the development server**:
-   ```sh
-   npm run dev
-   ```
-4. **Open http://localhost:5163/ in your browser.**
+- **Frontend**: React + TypeScript
+- **Styling**: ShadCN + Tailwind CSS
+- **Backend**: Supabase
+- **Hosting**: Vercel
+
+## 📖 Documentation
+
+- [Setup Guide](docs/setup/README.md)
+- [API Documentation](docs/api/README.md)
+- [Backend Architecture](docs/backend/README.md)
+
+## 🚀 Quick Start
+
+1. Clone the repository
+2. Install dependencies
+3. Configure environment
+4. Start development server
+
+Detailed instructions available in the [Setup Guide](docs/setup/README.md).
 
 ## 🌐 Live Version
 
-The app is also available on Vercel. You can access it without any setup.
-Click [here](https://final-project-sdk.vercel.app/login).
+Access the live application at [https://final-project-sdk.vercel.app/login](https://final-project-sdk.vercel.app/login)
 
-## 📝 Notes
+## 📄 License
 
-- No backend setup is required since Supabase is cloud-hosted.
-- Ensure you have a valid Supabase project if you're setting up authentication or database operations.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-🚀 Enjoy using the Library Management System! If you have any issues or suggestions, feel free to open an issue. 🎉
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
