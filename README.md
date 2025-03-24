@@ -50,14 +50,10 @@ This is a **Library Management System**, a web application built with **React** 
    ```
 2. **Install dependencies**:
    ```sh
-   Copiar
-   Editar
    npm install
    ```
 3. **Start the development server**:
    ```sh
-   Copiar
-   Editar
    npm run dev
    ```
 4. **Open http://localhost:5163/ in your browser.**
