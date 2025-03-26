@@ -16,7 +16,7 @@ function CheckboxWithLabel({ labelOn, labelOff }: { labelOn: string; labelOff: s
 test("cambia el texto al hacer clic", async () => {
     render(<CheckboxWithLabel labelOn="Encendido" labelOff="Apagado" />)
 
-    expect(screen.getByText("Apagado")).toBeInTheDocument()
+    expect(screen.getByText("Apagado")).toBeDefined()
     await userEvent.click(screen.getByRole("checkbox"))
-    expect(screen.getByText("Encendido")).toBeInTheDocument()
+    expect(screen.getByText("Encendido")).toBeDefined()
 })
