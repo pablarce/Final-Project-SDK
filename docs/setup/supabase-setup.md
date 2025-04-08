@@ -162,7 +162,43 @@ To verify your Supabase setup:
 
 - ✅ A validation script already exists at front/verify-supabase.ts
 
-You can run this script to test the connection and basic queries automatically. `verify-supabase.ts`
+### ▶️ Run the validation script:
+
+From the root of your project, execute the following:
+
+### With pnpm
+
+```
+pnpm tsx front/scripts/verify-supabase.ts
+```
+
+### Or with npm
+
+```
+npx tsx front/scripts/verify-supabase.ts
+```
+
+### Or with yarn
+
+```
+yarn tsx front/scripts/verify-supabase.ts
+```
+
+Make sure you have tsx installed as a dev dependency:
+
+```
+pnpm add -D tsx
+```
+
+This script will:
+
+- Check that your .env file exists
+
+- Validate environment variables
+
+- Connect to Supabase
+
+Verify that the main tables exist and are accessible
 
 ---
 

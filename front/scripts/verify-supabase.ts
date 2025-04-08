@@ -14,7 +14,7 @@ const checkEnvFile = () => {
 }
 
 const checkEnvVariables = () => {
-    const requiredVars = ["VITE_SUPABASE_URL", "VITE_SUPABASE_ANON_KEY"]
+    const requiredVars = ["NEXT_PUBLIC_SUPABASE_URL", "NEXT_PUBLIC_SUPABASE_ANON_KEY"]
     const missingVars = requiredVars.filter((varName) => !process.env[varName])
 
     if (missingVars.length > 0) {
@@ -28,21 +28,19 @@ const checkEnvVariables = () => {
 const verifySupabaseConnection = async () => {
     try {
         const supabase = createClient(
-            process.env.VITE_SUPABASE_URL ?? "",
-            process.env.VITE_SUPABASE_ANON_KEY ?? ""
+            process.env.NEXT_PUBLIC_SUPABASE_URL!,
+            process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
         )
 
-        // Verify connection
-        const { data, error } = await supabase.from("users").select("count").single()
-
-        if (error) throw error
+        // Simple test query to check connection
+        const { error: testError } = await supabase.from("users").select("*").limit(1)
+        if (testError) throw testError
 
         console.log("✅ Supabase connection established")
 
-        // Verify required tables
-        const requiredTables = ["users", "profiles"]
+        const requiredTables = ["users", "books", "library", "loans"]
         for (const table of requiredTables) {
-            const { error: tableError } = await supabase.from(table).select("count").single()
+            const { error: tableError } = await supabase.from(table).select("*").limit(1)
             if (tableError) {
                 console.error(`❌ Error: Table '${table}' does not exist or is not accessible`)
                 console.log(
@@ -52,7 +50,7 @@ const verifySupabaseConnection = async () => {
             }
             console.log(`✅ Table '${table}' verified`)
         }
-    } catch (error) {
+    } catch (error: any) {
         console.error("❌ Error connecting to Supabase:")
         console.error(error.message)
         process.exit(1)
@@ -62,10 +60,8 @@ const verifySupabaseConnection = async () => {
 const main = async () => {
     console.log("🔍 Starting Supabase configuration verification...\n")
 
-    // Load environment variables
     dotenv.config()
 
-    // Perform verifications
     checkEnvFile()
     checkEnvVariables()
     await verifySupabaseConnection()
