@@ -27,7 +27,10 @@ const checkEnvVariables = () => {
 
 const verifySupabaseConnection = async () => {
     try {
-        const supabase = createClient(process.env.VITE_SUPABASE_URL, process.env.VITE_SUPABASE_ANON_KEY)
+        const supabase = createClient(
+            process.env.VITE_SUPABASE_URL ?? "",
+            process.env.VITE_SUPABASE_ANON_KEY ?? ""
+        )
 
         // Verify connection
         const { data, error } = await supabase.from("users").select("count").single()
